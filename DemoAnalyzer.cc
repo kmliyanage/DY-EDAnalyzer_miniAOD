@@ -232,8 +232,7 @@ DemoAnalyzer::DemoAnalyzer(const edm::ParameterSet& iConfig)
     edm::InputTag theVertexLabel("offlineSlimmedPrimaryVertices");
     vertexCollToken = consumes<reco::VertexCollection>(theVertexLabel);
     
-    edm::InputTag theTrackLabel("offlineSlimmedPrimaryVertices");
-    vertexCollToken = consumes<reco::VertexCollection>(theVertexLabel);
+   
     
     usesResource("TFileService");
     edm::Service<TFileService> fs;
@@ -325,7 +324,7 @@ void DemoAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
         break;
     }
     
-    if(goodVertex)
+    if(goodVertex){
         std::cout<< "Vertex info : " << "Z : " << bestVtx->position().z() << "    " << "rho : " << sqrt((bestVtx->position().x()*bestVtx->position().x()) + (bestVtx->position().y()*bestVtx->position().y())) << "    " << "No.tracks : " << bestVtx->nTracks() << std::endl;
     
    
@@ -418,7 +417,7 @@ void DemoAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
                               
                                 const reco::TrackRef& tk1 = it1->tunePMuonBestTrack();
                                 ttv.push_back(ttkb->build(tk1));
-                                const reco::TrackRef tk2 = it2->tunePMuonBestTrack();
+                                const reco::TrackRef& tk2 = it2->tunePMuonBestTrack();
                                 //ttv.push_back(tk2);
                                 ttv.push_back(ttkb->build(tk2));
                             
@@ -446,7 +445,7 @@ void DemoAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
     
         } //end it1
         
-    //} //end goodVertex
+    } //end goodVertex
 
 }
 // ------------ method called once each job just before starting event loop  ------------
